@@ -1,0 +1,35 @@
+name: w_ai
+version: 0.0.1
+description: "Hermes profile w_ai, distributed via git."
+author: siavashmohammadi
+env_requires:
+  - name: DEEPSEEK_API_KEY
+    description: required credential copied from the source profile
+    required: true
+  - name: GOOGLE_API_KEY
+    description: required credential copied from the source profile
+    required: true
+  - name: HERMES_DASHBOARD_BASIC_AUTH_PASSWORD
+    description: required credential copied from the source profile
+    required: true
+  - name: HERMES_DASHBOARD_BASIC_AUTH_PASSWORD_HASH
+    description: required credential copied from the source profile
+    required: true
+  - name: HERMES_DASHBOARD_BASIC_AUTH_SECRET
+    description: required credential copied from the source profile
+    required: true
+  - name: HERMES_LANGFUSE_SECRET_KEY
+    description: required credential copied from the source profile
+    required: true
+  - name: MCP_KNOWLEDGE_API_KEY
+    description: required credential copied from the source profile
+    required: true
+  - name: MCP_OBISIDIAN_API_KEY
+    description: required credential copied from the source profile
+    required: true
+  - name: MCP_W_SPACE_API_KEY
+    description: required credential copied from the source profile
+    required: true
+  - name: OPENROUTER_API_KEY
+    description: required credential copied from the source profile
+    required: true

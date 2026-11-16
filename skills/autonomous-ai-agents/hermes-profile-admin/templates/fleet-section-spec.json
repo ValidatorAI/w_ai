@@ -1,0 +1,129 @@
+{
+  "_comment": "Spec for scripts/soul-section-author.py. Copy and edit to author another fleet-wide SOUL section. `core` is the shared body; %s is where the per-profile `patterns` block lands. `patterns` keys are SOUL folder names for the source tree (lowercased, spaces->underscores) and profile ids for the loaded mirrors; '_default' is the fallback. `subsections`/`forbids` drive --verify.",
+  "label": "card-handoff",
+  "heading": "## Inter-Profile Card Handoff",
+  "anchor": "## Memory & Knowledge Separation",
+  "patch_dir": "~/Documents/codes/Pavel/W/soul-patches",
+  "backup_dir": "~/.hermes/.soul_backup_cardhandoff",
+  "subsections": [
+    "Rule",
+    "When to create a card for another profile",
+    "When to split the work into two or more cards",
+    "Multi-card rules",
+    "Every handoff card must contain",
+    "Guardrails",
+    "Your typical handoff patterns"
+  ],
+  "forbids": [
+    "One handoff = one card"
+  ],
+  "core": "%s\n\n### Rule\n- The kanban card is the only channel for cross-profile work. Never use the Hermes API server or a direct profile invocation to hand a task to another profile.\n- One card carries one owner and one expected outcome. A single request may need two or more cards when it spans two or more profiles — you are expected to create as many as the work requires.\n- If the room has no kanban board yet, create one before writing the card.\n\n### When to create a card for another profile\n1. The request, decision, or finding belongs to another profile's domain — assign by role fit, not by convenience.\n2. The item is important, blocking, or time-critical for another profile's work and you cannot close it yourself.\n3. A decision or instruction you received changes scope, sequence, priority, or acceptance criteria that another profile owns.\n4. You completed part of the work and the remainder needs a different owner — open a follow-up card instead of leaving a comment.\n5. The input is ambiguous and the intended outcome cannot be inferred — assign it to `not_known_task` and record what is missing.\n6. The work is recurring or scheduled — tag the card as `cron` and route execution to the proper non-cron owner.\n7. It is a room/project lifecycle change (create/delete) — include a linked `knowledge` card so the OV structure stays aligned.\n8. You are blocking someone else's progress and their owner needs to know — raise the card instead of waiting to be asked.\n\n### When to split the work into two or more cards\n1. Two or more profiles own different parts of the same request — create one card per profile; never put two owners on one card.\n2. There is primary work and supporting work — one primary card for the owning profile, plus a supporting card for each other profile that must act.\n3. One part must wait for another — still create the dependent card, and state in it which card gates it, instead of holding the dependency privately.\n4. One part changes shared structure or documentation — create the linked `knowledge` card alongside the main card so OV and knowledge records stay aligned.\n5. A follow-up must happen after the current work settles — create the follow-up card now, marked as gated on the card(s) it depends on.\n6. The same item fans out to several recipients — create one card per recipient profile, or one card per group of identical work.\n\n### Multi-card rules\n- One card, one owner. If a card would need two assignees, split it into two cards.\n- Every card must stand alone: verbatim original text, target profile, reason, expected outcome, status, room and project context.\n- Cross-reference the sibling cards in each card body (naming what the other cards cover) so the set stays traceable.\n- Do not create two cards for the same work with the same owner and the same expected outcome.\n- Do not use one card as a broadcast channel for several profiles — that is what the split is for.\n- Keep, at most, the card you actually own; every other card must be assigned and handed off.\n\n### Every handoff card must contain\n- the original request or message text, verbatim\n- the target profile\n- the delegation reason (why that profile)\n- the expected outcome or acceptance criteria\n- the current status\n- the room and project context\n\n### Guardrails\n- Do not create a card for work you can complete yourself in this session.\n- Do not create cards for purely informational notes — those belong in the room or OV, not on the board.\n- Do not leave a card without an owner, a reason, or acceptance criteria.\n- Do not keep ownership of a card you have delegated — update the status, then hand it off.\n- Do not use `add_project_todo` / `edit_project_todo` as a substitute for cross-profile handoff; the card is the handoff channel.\n\n### Your typical handoff patterns\n%s\n",
+  "patterns": {
+    "default": [
+      "Any request that needs a specialist profile and is not plain chat: write the card and assign it to that profile.",
+      "If this room has no board yet, create it before writing the first card.",
+      "If the request spans several profiles, create one card per profile rather than one card with several owners.",
+      "Intent that cannot be inferred goes to `not_known_task`."
+    ],
+    "action": [
+      "Evidence or research is needed before delivery -> `market_research`.",
+      "Shared knowledge structure or documentation must change -> `knowledge`.",
+      "The item is planning/sequencing rather than execution -> `company_project` or `project_manager`.",
+      "Expected outcome cannot be inferred -> `not_known_task`.",
+      "If two of those apply at once, create both cards — do not stack two owners on one card."
+    ],
+    "ask_from_w": [
+      "The user asks for a change, not an answer -> `delegator` for routing, or `action` when the work is already approved.",
+      "Deep analysis or market evidence is requested -> `business_analyst` or `market_research`.",
+      "Never raise a card only to inform another profile; this profile answers questions and stays read-only by default."
+    ],
+    "business_analyst": [
+      "Execution-heavy work -> `action`.",
+      "Documentation or knowledge shape -> `knowledge`.",
+      "Evidence gaps -> `market_research`.",
+      "Ownership and sequencing of the resulting plan -> `company_project` or `project_manager`.",
+      "A plan that needs both execution and documentation becomes two cards, not one shared card."
+    ],
+    "coder": [
+      "A decision you received changes scope, sequence, priority, or acceptance criteria -> `project_manager`, `company_project`, or `business_analyst` as owner.",
+      "New shared knowledge structure is needed -> `knowledge`.",
+      "The requirement or spec is missing or ambiguous -> `business_analyst`; if intent itself is unclear -> `not_known_task`.",
+      "The remainder of the work is non-code delivery -> `action`.",
+      "If a decision also changes knowledge structure, create the `knowledge` card in addition to the owning profile's card."
+    ],
+    "company": [
+      "Execution work -> `company_project` or `action`.",
+      "Research and information synthesis -> `knowledge`.",
+      "Outcome cannot be inferred -> `not_known_task`.",
+      "If one item needs both a project owner and a knowledge update, create both cards."
+    ],
+    "company_project": [
+      "Execution tasks -> `action`.",
+      "Knowledge-building, references, documentation -> `knowledge`.",
+      "Intent or scope not actionable -> `not_known_task`.",
+      "Schedule-based work -> tag the card `cron` and route to the proper non-cron owner.",
+      "If a card needs another profile's support, raise the supporting card instead of widening the first card's owner."
+    ],
+    "config": [
+      "Execution that follows from a config change -> hand back through `delegator`.",
+      "A config change needs a profile-side follow-up (soul, tool, skill, MCP) -> card for that profile.",
+      "Several profiles are affected -> one card per affected profile.",
+      "Never apply a cross-profile change without an explicit card naming the target."
+    ],
+    "cron_profile": [
+      "Cron or recurring card validated -> reassign to the proper non-cron owner (`action`, `knowledge`, `company_project`, `company`) with recurrence metadata.",
+      "Classification is done and execution ownership must leave this profile.",
+      "If the recurring work also needs a knowledge record, create the additional `knowledge` card for it."
+    ],
+    "delegator": [
+      "Every non-explicit message must become a card before delegation.",
+      "Unclear input -> `not_known_task` with what is missing.",
+      "Recurring input -> cron tag plus non-cron execution owner.",
+      "Primary owner plus an OV/knowledge update means two cards (primary card and the linked `knowledge` card), not one merged card.",
+      "A mixed-intent request gets one card per dominant intent owner, each cross-referenced to the others."
+    ],
+    "knowledge": [
+      "An artifact implies code or implementation change -> `action`.",
+      "A knowledge change has planning or sequencing consequences -> `company_project` or `project_manager`.",
+      "Routing is uncertain -> `delegator`.",
+      "If the artifact change also needs implementation, create the `action` card alongside your own work."
+    ],
+    "market_research": [
+      "Non-research execution -> `action`.",
+      "Research output must be filed as project knowledge or an ADR -> `knowledge`.",
+      "Findings imply requirement or scope changes -> `business_analyst`.",
+      "If findings drive both a requirement change and execution, create both cards."
+    ],
+    "mechanical-modeler": [
+      "The modeler itself (its code or MCP server) must change -> `coder`.",
+      "Model artifacts must be documented or published -> `knowledge`.",
+      "The request is W-space company/project work rather than modeling -> `company_project` or `action`, and `not_known_task` when unclear.",
+      "If a change needs both code and documentation, create both cards."
+    ],
+    "normal_message": [
+      "Conversational intent becomes actionable -> `action`, `knowledge`, `company`, or `company_project`.",
+      "If the capture exposes two different owners, create one card for each.",
+      "Never send a direct room reply; the OV entry plus the handoff card is the delivery."
+    ],
+    "not_known_task": [
+      "After triage, reassign to the best-fit profile with a short rationale.",
+      "If triage reveals two distinct owners, split the card into one card per owner and reassign both.",
+      "Keep the original user message verbatim and add triage notes separately."
+    ],
+    "project_manager": [
+      "Distribute WBS items by role fit to `business_analyst`, `market_research`, `coder`, `knowledge`, `action`, or `normal_message`.",
+      "Cron-tagged items -> the proper non-cron execution owner.",
+      "When one WBS item spans two profiles, create one card per profile rather than one card with two owners."
+    ],
+    "testprofile": [
+      "Any work that belongs to another profile -> write the card and assign it.",
+      "Work spanning several profiles -> one card per profile.",
+      "Unclear input -> `not_known_task`."
+    ],
+    "_default": [
+      "Anything that belongs to another profile's domain -> write the card and assign it.",
+      "Work spanning several profiles -> one card per profile.",
+      "Unclear input -> `not_known_task`."
+    ]
+  }
+}

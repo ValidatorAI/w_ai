@@ -1,0 +1,43 @@
+{
+  "unlocks": {
+    "claude_confidant": {
+      "evidence": null,
+      "first_tier": "Copper",
+      "unlocked_at": 1788874501
+    },
+    "config_surgeon": {
+      "evidence": null,
+      "first_tier": "Copper",
+      "unlocked_at": 1788874501
+    },
+    "marathon_operator": {
+      "evidence": null,
+      "first_tier": "Copper",
+      "unlocked_at": 1788874501
+    },
+    "model_sommelier": {
+      "evidence": null,
+      "first_tier": "Silver",
+      "unlocked_at": 1788874501
+    },
+    "provider_polyglot": {
+      "evidence": null,
+      "first_tier": "Silver",
+      "unlocked_at": 1786507569
+    },
+    "toolchain_maxxer": {
+      "evidence": {
+        "session_id": "20260907_094506_0278ae",
+        "title": "Sending Example Message via MCP",
+        "value": 38
+      },
+      "first_tier": "Silver",
+      "unlocked_at": 1788874501
+    },
+    "toolset_cartographer": {
+      "evidence": null,
+      "first_tier": "Silver",
+      "unlocked_at": 1788874501
+    }
+  }
+}
